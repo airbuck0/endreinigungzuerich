@@ -12,28 +12,43 @@
             --primary: #3182CE;
             --primary-dark: #2B6CB0;
             --accent: #f5a524;
+            --accent-hover: #e69500;
+            --cta: #E53E3E;
+            --cta-hover: #C53030;
+            --cta-glow: rgba(229, 62, 62, 0.4);
             --dark: #1A202C;
             --dark-2: #2D3748;
             --gray: #4A5568;
             --gray-light: #718096;
             --bg-light: #F7FAFC;
-            --bg-lighter: #EDF2F7;
             --white: #FFFFFF;
-            --green: #13612e;
-            --red: #b82105;
+            --green: #38A169;
+            --phone-color: #E53E3E;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--dark); line-height: 1.7; }
         a { text-decoration: none; color: inherit; }
         img { max-width: 100%; height: auto; }
         .container { max-width: 1290px; margin: 0 auto; padding: 0 20px; }
 
+        /* Pulse animation for CTAs */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 var(--cta-glow); }
+            70% { box-shadow: 0 0 0 14px rgba(229, 62, 62, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
+        }
+        @keyframes phonePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
         /* Top Bar */
         .top-bar {
-            background: var(--gray-light);
+            background: var(--dark);
             color: var(--white);
-            padding: 8px 0;
+            padding: 10px 0;
             font-size: 14px;
         }
         .top-bar .container {
@@ -44,13 +59,22 @@
             flex-wrap: wrap;
             text-align: center;
         }
-        .top-bar a { color: var(--white); }
+        .top-bar a { color: var(--white); font-weight: 600; }
         .top-bar a:hover { text-decoration: underline; }
+        .top-bar .phone-top {
+            background: var(--cta);
+            padding: 4px 14px;
+            border-radius: 4px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
 
         /* Header */
         header {
             background: var(--white);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -63,25 +87,32 @@
             padding: 10px 0;
         }
         .logo img { max-width: 116px; }
-        .nav-desktop { display: flex; align-items: center; gap: 8px; }
+        .nav-desktop { display: flex; align-items: center; gap: 4px; }
         .nav-desktop a {
-            padding: 0.6em 0.5em;
+            padding: 0.6em 0.6em;
             font-weight: 500;
             color: var(--dark);
             transition: color 0.2s;
-        }
-        .nav-desktop a:hover { color: var(--primary); }
-        .nav-phone {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--primary);
-            font-weight: 600;
             font-size: 15px;
         }
-        .nav-phone svg { width: 18px; height: 18px; }
+        .nav-desktop a:hover { color: var(--primary); }
+        .header-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--cta);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        .header-phone:hover { background: var(--cta-hover); transform: scale(1.03); }
+        .header-phone svg { width: 20px; height: 20px; }
         .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); margin: 5px 0; transition: 0.3s; }
+        .hamburger span { display: block; width: 26px; height: 3px; background: var(--dark); margin: 5px 0; border-radius: 2px; transition: 0.3s; }
 
         /* Mobile Nav */
         .mobile-nav {
@@ -94,24 +125,39 @@
         .mobile-nav.active { display: block; }
         .mobile-nav-inner {
             background: var(--dark);
-            width: 280px;
+            width: 300px;
             height: 100%;
-            padding: 20px;
+            padding: 24px;
             margin-left: auto;
         }
         .mobile-nav-close {
             background: none; border: none; color: var(--white);
-            font-size: 28px; cursor: pointer; float: right;
+            font-size: 32px; cursor: pointer; float: right;
         }
         .mobile-nav a {
-            display: block; color: var(--white); padding: 12px 0;
+            display: block; color: var(--white); padding: 14px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 16px;
+            font-size: 17px;
+        }
+        .mobile-nav-phone {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--cta);
+            color: var(--white);
+            padding: 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+            border-bottom: none !important;
         }
 
         /* Hero */
         .hero {
-            background: linear-gradient(rgba(26,32,44,0.7), rgba(26,32,44,0.7)), url('images/hero-1.png');
+            background: linear-gradient(rgba(26,32,44,0.75), rgba(26,32,44,0.75)), url('images/hero-1.png');
             background-size: cover;
             background-position: center;
             color: var(--white);
@@ -129,41 +175,39 @@
             line-height: 1.3;
             margin-bottom: 24px;
         }
-        .hero-features {
-            list-style: none;
-            margin-bottom: 24px;
-        }
+        .hero-features { list-style: none; margin-bottom: 24px; }
         .hero-features li {
-            padding: 6px 0;
-            padding-left: 28px;
+            padding: 7px 0 7px 30px;
             position: relative;
             font-size: 15px;
         }
         .hero-features li::before {
-            content: "✓";
+            content: "\2713";
             position: absolute;
             left: 0;
             color: var(--accent);
             font-weight: 700;
+            font-size: 18px;
         }
-        .hero-stars {
-            color: var(--accent);
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-        .hero-cta {
+        .hero-stars { color: var(--accent); font-size: 22px; margin-bottom: 20px; }
+
+        /* Phone CTA in Hero */
+        .hero-phone-cta {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: var(--primary);
+            gap: 10px;
+            background: var(--cta);
             color: var(--white);
-            padding: 14px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: background 0.3s;
+            padding: 18px 32px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 19px;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+            text-align: center;
         }
-        .hero-cta:hover { background: var(--primary-dark); }
+        .hero-phone-cta:hover { background: var(--cta-hover); transform: scale(1.04); }
+        .hero-phone-cta svg { width: 24px; height: 24px; flex-shrink: 0; }
 
         /* Form */
         .hero-form {
@@ -171,7 +215,8 @@
             border-radius: 12px;
             padding: 32px;
             color: var(--dark);
-            box-shadow: 0 15px 25px -10px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-top: 4px solid var(--cta);
         }
         .hero-form h2 {
             font-size: 1.3rem;
@@ -181,337 +226,232 @@
         }
         .form-group { margin-bottom: 14px; }
         .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            color: var(--gray);
+            display: block; font-size: 14px; font-weight: 500;
+            margin-bottom: 4px; color: var(--gray);
         }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 15px;
-            font-family: inherit;
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 11px 14px; border: 1px solid #ddd;
+            border-radius: 6px; font-size: 15px; font-family: inherit;
             transition: border-color 0.2s;
         }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(49,130,206,0.15);
         }
         .form-group textarea { resize: vertical; min-height: 80px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
+            width: 100%; padding: 16px;
+            background: var(--cta); color: var(--white);
+            border: none; border-radius: 8px;
+            font-size: 17px; font-weight: 700;
+            cursor: pointer; transition: all 0.3s;
             font-family: inherit;
+            animation: pulse 2.5s infinite;
         }
-        .btn-submit:hover { background: var(--primary-dark); }
+        .btn-submit:hover { background: var(--cta-hover); transform: scale(1.02); }
 
         /* Sections */
         .section { padding: 60px 0; }
         .section-alt { background: var(--bg-light); }
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--dark);
+            font-size: 1.8rem; font-weight: 700;
+            margin-bottom: 20px; color: var(--dark);
         }
         .section-text {
-            color: var(--gray);
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 16px;
+            color: var(--gray); font-size: 16px;
+            line-height: 1.8; margin-bottom: 16px;
         }
+
+        /* CTA Banner between sections */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--white);
+        }
+        .cta-banner h3 { font-size: 1.5rem; margin-bottom: 8px; }
+        .cta-banner p { font-size: 16px; opacity: 0.9; margin-bottom: 20px; }
+        .cta-banner-btns {
+            display: flex; justify-content: center;
+            gap: 16px; flex-wrap: wrap;
+        }
+        .cta-btn-phone {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--cta); color: var(--white);
+            padding: 16px 32px; border-radius: 10px;
+            font-weight: 800; font-size: 18px;
+            transition: all 0.3s; animation: pulse 2s infinite;
+        }
+        .cta-btn-phone:hover { background: var(--cta-hover); transform: scale(1.04); }
+        .cta-btn-phone svg { width: 22px; height: 22px; }
+        .cta-btn-form {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--white); color: var(--primary-dark);
+            padding: 16px 32px; border-radius: 10px;
+            font-weight: 700; font-size: 18px;
+            transition: all 0.3s;
+        }
+        .cta-btn-form:hover { background: #edf2f7; transform: scale(1.04); }
 
         /* Pricing */
         .pricing-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
+            display: flex; gap: 12px; margin-bottom: 30px;
         }
         .pricing-tab {
-            padding: 10px 24px;
-            border: 2px solid var(--primary);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            background: transparent;
-            color: var(--primary);
-            font-family: inherit;
-            font-size: 15px;
-            transition: all 0.2s;
+            padding: 10px 24px; border: 2px solid var(--primary);
+            border-radius: 6px; cursor: pointer; font-weight: 600;
+            background: transparent; color: var(--primary);
+            font-family: inherit; font-size: 15px; transition: all 0.2s;
         }
-        .pricing-tab.active {
-            background: var(--primary);
-            color: var(--white);
-        }
+        .pricing-tab.active { background: var(--primary); color: var(--white); }
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
         .pricing-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 28px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--white); border-radius: 12px;
+            padding: 28px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s;
         }
         .pricing-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
-        .pricing-card h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--dark);
-        }
-        .pricing-card .features {
-            list-style: none;
-            margin-bottom: 16px;
-        }
+        .pricing-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+        .pricing-card .features { list-style: none; margin-bottom: 16px; }
         .pricing-card .features li {
-            padding: 4px 0;
-            font-size: 14px;
-            color: var(--gray);
-            padding-left: 22px;
-            position: relative;
+            padding: 4px 0 4px 22px; font-size: 14px;
+            color: var(--gray); position: relative;
         }
         .pricing-card .features li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--green);
-            font-weight: 700;
+            content: "\2713"; position: absolute; left: 0;
+            color: var(--green); font-weight: 700;
         }
-        .pricing-card .price {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-        .pricing-card .price-note {
-            font-size: 13px;
-            color: var(--gray-light);
-            margin-bottom: 16px;
-        }
+        .pricing-card .price { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+        .pricing-card .price-note { font-size: 13px; color: var(--gray-light); margin-bottom: 16px; }
         .pricing-card .btn-offerte {
-            display: block;
-            text-align: center;
-            padding: 12px;
-            background: var(--primary);
-            color: var(--white);
-            border-radius: 6px;
-            font-weight: 600;
-            transition: background 0.3s;
+            display: block; text-align: center; padding: 13px;
+            background: var(--cta); color: var(--white);
+            border-radius: 8px; font-weight: 700; font-size: 15px;
+            transition: all 0.3s;
         }
-        .pricing-card .btn-offerte:hover { background: var(--primary-dark); }
+        .pricing-card .btn-offerte:hover { background: var(--cta-hover); transform: scale(1.02); }
         .pricing-hidden { display: none; }
 
         /* Advantages */
         .advantages-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 40px; align-items: center;
         }
         .advantages-img { border-radius: 12px; }
 
         /* Steps */
         .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-top: 30px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 24px; margin-top: 30px;
         }
         .step-card {
-            background: var(--white);
-            padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            background: var(--white); padding: 28px;
+            border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.06);
         }
         .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: var(--white);
-            font-weight: 700;
-            margin-bottom: 12px;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--primary); color: var(--white);
+            font-weight: 700; font-size: 18px; margin-bottom: 12px;
         }
-        .step-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
+        .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
         .step-card p { font-size: 15px; color: var(--gray); line-height: 1.7; }
 
         /* FAQ */
         .faq-item {
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            overflow: hidden;
+            border: 1px solid #eee; border-radius: 8px;
+            margin-bottom: 10px; overflow: hidden;
         }
         .faq-question {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 20px;
-            background: var(--white);
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark);
-            text-align: left;
-            font-family: inherit;
-            transition: background 0.2s;
+            width: 100%; display: flex; justify-content: space-between;
+            align-items: center; padding: 18px 20px;
+            background: var(--white); border: none; cursor: pointer;
+            font-size: 16px; font-weight: 600; color: var(--dark);
+            text-align: left; font-family: inherit; transition: background 0.2s;
         }
         .faq-question:hover { background: var(--bg-light); }
         .faq-question .icon {
-            font-size: 20px;
-            transition: transform 0.3s;
-            color: var(--primary);
-            flex-shrink: 0;
-            margin-left: 12px;
+            font-size: 22px; transition: transform 0.3s;
+            color: var(--primary); flex-shrink: 0; margin-left: 12px;
         }
         .faq-question.active .icon { transform: rotate(45deg); }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        .faq-answer-inner {
-            padding: 0 20px 18px;
-            color: var(--gray);
-            font-size: 15px;
-            line-height: 1.8;
-        }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-answer-inner { padding: 0 20px 18px; color: var(--gray); font-size: 15px; line-height: 1.8; }
 
-        /* Target Audience */
+        /* Audience */
         .audience-list { list-style: none; }
         .audience-list li {
-            margin-bottom: 16px;
-            padding-left: 28px;
-            position: relative;
-            font-size: 15px;
-            color: var(--gray);
-            line-height: 1.8;
+            margin-bottom: 16px; padding-left: 28px;
+            position: relative; font-size: 15px;
+            color: var(--gray); line-height: 1.8;
         }
         .audience-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 18px;
+            content: "\2713"; position: absolute; left: 0;
+            color: var(--accent); font-weight: 700; font-size: 18px;
         }
         .audience-list li strong { color: var(--dark); }
 
         /* Footer */
         footer {
-            background: var(--dark);
-            color: rgba(255,255,255,0.8);
+            background: var(--dark); color: rgba(255,255,255,0.8);
             padding: 50px 0 0;
         }
         .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;
         }
-        .footer-grid h4 {
-            color: var(--white);
-            font-size: 16px;
-            margin-bottom: 16px;
-        }
+        .footer-grid h4 { color: var(--white); font-size: 16px; margin-bottom: 16px; }
         .footer-grid a {
-            display: block;
-            color: rgba(255,255,255,0.7);
-            padding: 4px 0;
-            font-size: 14px;
-            transition: color 0.2s;
+            display: block; color: rgba(255,255,255,0.7);
+            padding: 4px 0; font-size: 14px; transition: color 0.2s;
         }
         .footer-grid a:hover { color: var(--white); }
         .footer-grid p { font-size: 14px; line-height: 1.7; }
         .footer-logo { max-width: 150px; margin-bottom: 16px; }
-        .footer-social { display: flex; gap: 12px; margin-top: 12px; }
-        .footer-social a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            color: var(--white);
-            font-size: 14px;
-            transition: background 0.2s;
+        .footer-phone {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--cta); color: var(--white) !important;
+            padding: 10px 18px; border-radius: 8px;
+            font-weight: 700; font-size: 15px; margin-top: 8px;
         }
-        .footer-social a:hover { background: var(--primary); }
+        .footer-phone:hover { background: var(--cta-hover); }
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 20px 0;
-            margin-top: 40px;
-            text-align: center;
-            font-size: 14px;
+            padding: 20px 0; margin-top: 40px;
+            text-align: center; font-size: 14px;
         }
 
-        /* WhatsApp Button */
+        /* WhatsApp */
         .whatsapp-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            background: #25D366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
+            position: fixed; bottom: 20px; right: 20px;
+            width: 60px; height: 60px; background: #25D366;
+            border-radius: 50%; display: flex; align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 99;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+            z-index: 99; transition: transform 0.2s;
         }
-        .whatsapp-btn:hover { transform: scale(1.1); }
-        .whatsapp-btn svg { width: 28px; height: 28px; fill: white; }
+        .whatsapp-btn:hover { transform: scale(1.12); }
+        .whatsapp-btn svg { width: 30px; height: 30px; fill: white; }
 
-        /* Phone Sticky Bar Mobile */
+        /* Phone Sticky Mobile */
         .phone-sticky {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 14px;
-            font-weight: 600;
-            font-size: 16px;
-            z-index: 99;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+            display: none; position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--cta); color: var(--white);
+            text-align: center; padding: 16px; font-weight: 700;
+            font-size: 18px; z-index: 99;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+            animation: phonePulse 3s infinite;
         }
-        .phone-sticky a { color: var(--white); }
+        .phone-sticky a {
+            color: var(--white);
+            display: flex; align-items: center;
+            justify-content: center; gap: 8px;
+        }
+        .phone-sticky svg { width: 22px; height: 22px; fill: currentColor; }
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -520,9 +460,10 @@
         }
         @media (max-width: 768px) {
             .hero-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 1.6rem; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero-phone-cta { font-size: 16px; padding: 14px 24px; width: 100%; justify-content: center; }
             .nav-desktop { display: none; }
-            .nav-phone { display: none; }
+            .header-phone { display: none; }
             .hamburger { display: block; }
             .pricing-grid { grid-template-columns: 1fr; }
             .advantages-grid { grid-template-columns: 1fr; }
@@ -530,8 +471,10 @@
             .footer-grid { grid-template-columns: 1fr; }
             .section-title { font-size: 1.4rem; }
             .phone-sticky { display: block; }
-            .whatsapp-btn { bottom: 70px; }
+            .whatsapp-btn { bottom: 75px; }
             .logo img { max-width: 60px; }
+            .cta-banner h3 { font-size: 1.2rem; }
+            .cta-btn-phone, .cta-btn-form { font-size: 16px; padding: 14px 24px; }
         }
     </style>
 </head>
@@ -540,7 +483,12 @@
 <!-- Top Bar -->
 <div class="top-bar">
     <div class="container">
-        Rufen Sie uns an unter <a href="tel:+41441223426">+41 44 122 34 26</a> oder kontaktieren Sie uns unter <a href="mailto:kontakt@endreinigungzuerich.ch">kontakt@endreinigungzuerich.ch</a>
+        Rufen Sie uns an:
+        <a href="tel:+41441223426" class="phone-top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +41 44 122 34 26
+        </a>
+        oder <a href="mailto:kontakt@endreinigungzuerich.ch">kontakt@endreinigungzuerich.ch</a>
     </div>
 </div>
 
@@ -548,15 +496,16 @@
 <header>
     <div class="container">
         <div class="header-inner">
-            <a href="/" class="logo"><img src="images/logo.jpg" alt="Endreinigung Zürich"></a>
+            <a href="#top" class="logo"><img src="images/logo.jpg" alt="Endreinigung Zürich"></a>
             <nav class="nav-desktop">
-                <a href="/">Home</a>
-                <a href="#standorte">Standorte</a>
-                <a href="#ratgeber">Ratgeber</a>
+                <a href="#was-ist">Endreinigung</a>
+                <a href="#preise">Preise</a>
+                <a href="#vorteile">Vorteile</a>
+                <a href="#ablauf">Ablauf</a>
+                <a href="#faq">FAQ</a>
                 <a href="#kontakt">Kontakt</a>
-                <a href="#ueber-uns">Über uns</a>
             </nav>
-            <a href="tel:+41441223426" class="nav-phone">
+            <a href="tel:+41441223426" class="header-phone">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 +41 44 122 34 26
             </a>
@@ -572,18 +521,21 @@
     <div class="mobile-nav-inner" onclick="event.stopPropagation()">
         <button class="mobile-nav-close" onclick="toggleMobileNav()">&times;</button>
         <br><br>
-        <a href="/" onclick="toggleMobileNav()">Home</a>
-        <a href="#standorte" onclick="toggleMobileNav()">Standorte</a>
-        <a href="#ratgeber" onclick="toggleMobileNav()">Ratgeber</a>
+        <a href="#was-ist" onclick="toggleMobileNav()">Endreinigung</a>
+        <a href="#preise" onclick="toggleMobileNav()">Preise</a>
+        <a href="#vorteile" onclick="toggleMobileNav()">Vorteile</a>
+        <a href="#ablauf" onclick="toggleMobileNav()">Ablauf</a>
+        <a href="#faq" onclick="toggleMobileNav()">FAQ</a>
         <a href="#kontakt" onclick="toggleMobileNav()">Kontakt</a>
-        <a href="#ueber-uns" onclick="toggleMobileNav()">Über uns</a>
-        <br>
-        <a href="tel:+41441223426" style="color: var(--accent);">Tel: +41 44 122 34 26</a>
+        <a href="tel:+41441223426" class="mobile-nav-phone" onclick="toggleMobileNav()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            Jetzt anrufen: +41 44 122 34 26
+        </a>
     </div>
 </div>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero" id="top">
     <div class="container">
         <div class="hero-grid">
             <div>
@@ -595,13 +547,13 @@
                     <li>Sorgen- und risikolose Wohnungsübergabe</li>
                     <li>Fachkundige, qualifizierte und professionelle Mitarbeiter mit mehrjähriger lokaler Erfahrung</li>
                 </ul>
-                <div class="hero-stars">★★★★★</div>
-                <a href="tel:+41441223426" class="hero-cta">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    Rufen Sie uns jetzt unverbindlich an +41 44 122 34 26
+                <div class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <a href="tel:+41441223426" class="hero-phone-cta">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    Jetzt anrufen: +41 44 122 34 26
                 </a>
             </div>
-            <div class="hero-form">
+            <div class="hero-form" id="offerte">
                 <h2>Jetzt Unverbindliche Offerte Anfordern!</h2>
                 <form id="contactForm" onsubmit="handleSubmit(event)">
                     <div class="form-row">
@@ -634,7 +586,7 @@
 </section>
 
 <!-- Was ist eine Endreinigung -->
-<section class="section" id="ratgeber">
+<section class="section" id="was-ist">
     <div class="container">
         <h2 class="section-title">Was ist eine Endreinigung?</h2>
         <p class="section-text">Eine Endreinigung ist die gründliche Reinigung einer Wohnung oder eines Hauses nach einem Auszug. Sie ist in der Schweiz gesetzlich vorgeschrieben und stellt sicher, dass das Mietobjekt in einem einwandfreien Zustand an den Vermieter oder die Verwaltung übergeben wird. In der Schweiz ist sie in der Regel Voraussetzung für die Wohnungsübergabe. Unsere professionelle Endreinigung in Zürich garantiert, dass Sie Ihre Mietkaution vollständig zurückerhalten.</p>
@@ -642,6 +594,21 @@
         <p class="section-text">Mit unserer Abnahmegarantie stellen wir sicher, dass die Reinigung den höchsten Standards entspricht und vom Vermieter und der Verwaltung abgenommen wird. Falls bei der Wohnungsabnahme Mängel festgestellt werden, beheben wir diese kostenlos für Sie. Für Sie bedeutet das: Kein Risiko, kein Stress.</p>
     </div>
 </section>
+
+<!-- CTA Banner 1 -->
+<div class="cta-banner">
+    <div class="container">
+        <h3>Kostenlose Offerte in 24 Stunden</h3>
+        <p>Kontaktieren Sie uns jetzt für Ihre professionelle Endreinigung in Zürich</p>
+        <div class="cta-banner-btns">
+            <a href="tel:+41441223426" class="cta-btn-phone">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                +41 44 122 34 26
+            </a>
+            <a href="#offerte" class="cta-btn-form">Offerte anfordern</a>
+        </div>
+    </div>
+</div>
 
 <!-- Preise -->
 <section class="section section-alt" id="preise">
@@ -652,147 +619,108 @@
             <button class="pricing-tab" onclick="showPricing('haeuser', this)">Preise für Einfamilienhäuser</button>
         </div>
 
-        <!-- Wohnungen -->
         <div class="pricing-grid" id="pricing-wohnungen">
             <div class="pricing-card">
                 <h3>Reinigung inkl. Wohnungsabgabe<br>1 – 1.5 Zimmer-Wohnung</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 539.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Wohnungsabgabe<br>2 – 2.5 Zimmer-Wohnung</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 689.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Wohnungsabgabe<br>3 – 3.5 Zimmer-Wohnung</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 839.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Wohnungsabgabe<br>4 – 4.5 Zimmer-Wohnung</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 989.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Wohnungsabgabe<br>5 – 5.5 Zimmer-Wohnung</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 1'139.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Wohnungsabgabe<br>6 – 6.5 Zimmer-Wohnung</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 1'389.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
         </div>
 
-        <!-- Häuser -->
         <div class="pricing-grid pricing-hidden" id="pricing-haeuser">
             <div class="pricing-card">
                 <h3>Reinigung inkl. Hausabgabe<br>3 – 3.5 Zimmer-Einfamilienhaus</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 1'289.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Hausabgabe<br>4 – 4.5 Zimmer-Einfamilienhaus</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 1'589.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Hausabgabe<br>5 – 5.5 Zimmer-Einfamilienhaus</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 1'889.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Hausabgabe<br>6 – 6.5 Zimmer-Einfamilienhaus</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 2'189.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Hausabgabe<br>7 – 7.5 Zimmer-Einfamilienhaus</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 2'389.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
             <div class="pricing-card">
                 <h3>Reinigung inkl. Hausabgabe<br>8 – 8.5 Zimmer-Einfamilienhaus</h3>
-                <ul class="features">
-                    <li>inkl. 100% Abnahmegarantie</li>
-                    <li>inkl. Anfahrt, Material und MwSt.</li>
-                </ul>
+                <ul class="features"><li>inkl. 100% Abnahmegarantie</li><li>inkl. Anfahrt, Material und MwSt.</li></ul>
                 <div class="price">CHF 2'589.00</div>
                 <div class="price-note">inkl. 8.1% MwSt.</div>
-                <a href="#kontakt" class="btn-offerte">Offerte Anfordern</a>
+                <a href="#offerte" class="btn-offerte">Offerte Anfordern</a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Vorteile -->
-<section class="section">
+<section class="section" id="vorteile">
     <div class="container">
         <div class="advantages-grid">
             <div>
                 <h2 class="section-title">Vorteile einer professionellen Endreinigung in Zürich</h2>
-                <p class="section-text">Ein entscheidender Vorteil unserer professionellen Endreinigung in Zürich ist die <strong>Abnahmegarantie</strong>. Wir garantieren Ihnen die erfolgreiche Wohnungsübergabe durch Ihren Vermieter oder die Verwaltung. Mit unserer Abnahmegarantie haben Sie die Sicherheit, dass die Wohnungsreinigung allen Anforderungen entspricht. Sollte bei der Wohnungsübergabe trotz unserer gründlichen Arbeit etwas beanstandet werden, kommen wir umgehend und kostenlos zurück. Diese Abnahmegarantie gibt Ihnen die Gewissheit, dass Sie Ihre volle Mietkaution zurückerhalten.</p>
-                <p class="section-text">Ein weiterer Vorteil ist die enorme <strong>Zeitersparnis</strong>. Ein Umzug ist stressig genug – da sollte die Endreinigung nicht auch noch zur Belastung werden. Unsere Reinigungskräfte übernehmen die komplette Wohnungsreinigung Ihrer alten Wohnung, während Sie sich um den Transport und die neue Einrichtung kümmern. Mit professionellem Equipment erledigt unsere Reinigungsfirma in wenigen Stunden, wofür Sie selbst mehrere Tage benötigen würden.</p>
-                <p class="section-text">Der <strong>finanzielle Vorteil</strong> liegt auf der Hand: Die häufigste Ursache für Kautionsabzüge in Zürich ist eine unzureichende Umzugsreinigung. Vermieter nehmen oft Abzüge von mehreren hundert bis über tausend Franken vor, wenn die Wohnung nicht sauber und gründlich gereinigt übergeben wird. Mit unserer professionellen Umzugsreinigung in Zürich vermeiden Sie diese Kosten komplett.</p>
-                <p class="section-text">Ein wichtiger Vorteil ist die <strong>professionelle Ausrüstung</strong>. Unsere Teams arbeiten mit modernster Reinigungstechnologie. Die Endreinigung inkl. professioneller Ausrüstung umfasst Industriestaubsauger, Dampfreiniger, Teleskopstangen und Spezialreiniger.</p>
-                <p class="section-text">Ein zusätzlicher Vorteil liegt in der <strong>Expertise unseres Teams</strong>. Unsere Reinigungskräfte übernehmen die Endreinigung der Wohnung mit höchster Professionalität. Sie sind speziell geschult und wissen genau, worauf Vermieter in Zürich bei der Wohnungsübergabe achten.</p>
+                <p class="section-text">Ein entscheidender Vorteil unserer professionellen Endreinigung in Zürich ist die <strong>Abnahmegarantie</strong>. Wir garantieren Ihnen die erfolgreiche Wohnungsübergabe durch Ihren Vermieter oder die Verwaltung. Sollte bei der Wohnungsübergabe trotz unserer gründlichen Arbeit etwas beanstandet werden, kommen wir umgehend und kostenlos zurück.</p>
+                <p class="section-text">Ein weiterer Vorteil ist die enorme <strong>Zeitersparnis</strong>. Unsere Reinigungskräfte übernehmen die komplette Wohnungsreinigung Ihrer alten Wohnung, während Sie sich um den Transport und die neue Einrichtung kümmern. Mit professionellem Equipment erledigt unsere Reinigungsfirma in wenigen Stunden, wofür Sie selbst mehrere Tage benötigen würden.</p>
+                <p class="section-text">Der <strong>finanzielle Vorteil</strong> liegt auf der Hand: Die häufigste Ursache für Kautionsabzüge in Zürich ist eine unzureichende Umzugsreinigung. Mit unserer professionellen Umzugsreinigung vermeiden Sie diese Kosten komplett.</p>
+                <p class="section-text">Unsere Teams arbeiten mit <strong>modernster Reinigungstechnologie</strong>: Industriestaubsauger, Dampfreiniger, Teleskopstangen und Spezialreiniger für Ergebnisse, die mit haushaltsüblichen Mitteln nicht erreichbar sind.</p>
             </div>
             <div>
                 <img src="images/hero-2.png" alt="Professionelle Endreinigung Zürich" class="advantages-img">
@@ -801,141 +729,135 @@
     </div>
 </section>
 
+<!-- CTA Banner 2 -->
+<div class="cta-banner">
+    <div class="container">
+        <h3>Bereit für Ihre stressfreie Endreinigung?</h3>
+        <p>100% Abnahmegarantie - Festpreise ohne versteckte Kosten</p>
+        <div class="cta-banner-btns">
+            <a href="tel:+41441223426" class="cta-btn-phone">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                +41 44 122 34 26
+            </a>
+            <a href="#offerte" class="cta-btn-form">Gratis-Offerte anfordern</a>
+        </div>
+    </div>
+</div>
+
 <!-- Zielgruppen -->
 <section class="section section-alt">
     <div class="container">
         <h2 class="section-title">Für wen eignet sich unsere Umzugsreinigung inkl. Abnahmegarantie?</h2>
         <p class="section-text">Unsere Umzugsreinigung eignet sich für verschiedene Kundengruppen in Zürich, die höchste Qualität und Zuverlässigkeit bei der Wohnungsreinigung erwarten.</p>
         <ul class="audience-list">
-            <li><strong>Mieter vor dem Auszug:</strong> Sie ziehen aus ihrer Wohnung oder ihrem Haus in Zürich aus und möchten ihre volle Mietkaution zurückerhalten. Unsere Reinigungsfirma kennt die strengen Anforderungen der Zürcher Vermieter genau und sorgt für eine gründliche Endreinigung, die bei der Wohnungsübergabe problemlos abgenommen wird.</li>
-            <li><strong>Vermieter und Immobilienverwaltungen,</strong> um Wohnungen zwischen Mieterwechseln schnell und professionell aufzubereiten. Unsere Reinigungskräfte übernehmen die Endreinigung der Wohnung und sorgen dafür, dass neue Mieter in ein sauberes und einwandfreies Objekt einziehen können.</li>
-            <li><strong>Unternehmen und Büros</strong> bei Standortwechseln oder Renovationen. Die professionelle Umzugsreinigung in Zürich umfasst Büroräume, Produktionsstätten und Gewerbeflächen.</li>
-            <li><strong>Verkäufer von Immobilien,</strong> da eine saubere und gepflegte Immobilie schneller verkauft wird und einen höheren Wert erzielt. Unsere gründliche Wohnungsreinigung präsentiert Ihre Immobilie im besten Licht.</li>
+            <li><strong>Mieter vor dem Auszug:</strong> Sie ziehen aus ihrer Wohnung oder ihrem Haus in Zürich aus und möchten ihre volle Mietkaution zurückerhalten. Unsere Reinigungsfirma kennt die strengen Anforderungen der Zürcher Vermieter genau.</li>
+            <li><strong>Vermieter und Immobilienverwaltungen,</strong> um Wohnungen zwischen Mieterwechseln schnell und professionell aufzubereiten und eine schnellere Neuvermietung zu ermöglichen.</li>
+            <li><strong>Unternehmen und Büros</strong> bei Standortwechseln oder Renovationen. Unsere Umzugsreinigung umfasst Büroräume, Produktionsstätten und Gewerbeflächen.</li>
+            <li><strong>Verkäufer von Immobilien,</strong> da eine saubere und gepflegte Immobilie schneller verkauft wird und einen höheren Wert erzielt.</li>
         </ul>
-        <p class="section-text">Besonders häufig werden wir von Mietern in Zürich, Oerlikon, Altstetten, Wiedikon, Seefeld und Enge kontaktiert. Die Anforderungen bei der Wohnungsübergabe sind in diesen Stadtteilen besonders streng. Fordern Sie jetzt Ihre Gratisofferte für die Endreinigung an.</p>
+        <p class="section-text">Besonders häufig werden wir von Mietern in Zürich, Oerlikon, Altstetten, Wiedikon, Seefeld und Enge kontaktiert.</p>
     </div>
 </section>
 
 <!-- Ablauf -->
-<section class="section">
+<section class="section" id="ablauf">
     <div class="container">
         <h2 class="section-title">Ablauf der Endreinigung – Schritt für Schritt</h2>
-        <p class="section-text">Der Ablauf unserer professionellen Endreinigung in Zürich ist einfach, transparent und auf Ihre Bedürfnisse abgestimmt. Wir begleiten Sie von der ersten Anfrage bis zur erfolgreichen Wohnungsübergabe mit unserer Abnahmegarantie.</p>
+        <p class="section-text">Der Ablauf unserer professionellen Endreinigung in Zürich ist einfach, transparent und auf Ihre Bedürfnisse abgestimmt.</p>
         <div class="steps-grid">
             <div class="step-card">
                 <div class="step-number">1</div>
                 <h3>Kostenlose Offerte innerhalb von 24 Stunden</h3>
-                <p>Füllen Sie unser Formular aus oder rufen Sie uns direkt an. Wir benötigen einige Angaben zu Ihrer Wohnung: Anzahl Zimmer, Grösse in Quadratmetern, Zustand und eventuelle Zusatzleistungen. Innerhalb von 24 Stunden erhalten Sie Ihre Gratisofferte für die Endreinigung – transparent, unverbindlich und fair kalkuliert.</p>
+                <p>Füllen Sie unser Formular aus oder rufen Sie uns direkt an. Innerhalb von 24 Stunden erhalten Sie Ihre Gratisofferte – transparent, unverbindlich und fair kalkuliert.</p>
             </div>
             <div class="step-card">
                 <div class="step-number">2</div>
-                <h3>Flexible Terminvereinbarung für Ihre Wohnungsübergabe</h3>
-                <p>Wir vereinbaren einen Termin, der perfekt zu Ihrem Umzugsplan und Ihrer Wohnungsübergabe passt. Ob Wochenende, Feiertage oder kurzfristige Buchungen – unsere Reinigungskräfte übernehmen die Endreinigung der Wohnung zu dem Zeitpunkt, der für Sie ideal ist.</p>
+                <h3>Flexible Terminvereinbarung</h3>
+                <p>Wir vereinbaren einen Termin, der perfekt zu Ihrem Umzugsplan passt. Ob Wochenende, Feiertage oder kurzfristige Buchungen – wir sind flexibel.</p>
             </div>
             <div class="step-card">
                 <div class="step-number">3</div>
-                <h3>Professionelle Durchführung der Endreinigung inkl. aller Bereiche</h3>
-                <p>Am vereinbarten Termin erscheint unser Team pünktlich mit kompletter Ausrüstung. Die Endreinigung inkl. aller Bereiche umfasst Küche mit Backofen, Kühlschrank und allen Schränken, Badezimmer mit Armaturen, Fugen und Sanitär, alle Böden, Fenster innen und aussen, Heizkörper, Türen und Steckdosen sowie Balkon, Keller oder Waschküche.</p>
+                <h3>Professionelle Durchführung</h3>
+                <p>Unser Team erscheint pünktlich mit kompletter Ausrüstung. Küche, Bad, Böden, Fenster, Heizkörper, Türen, Balkon, Keller – alles wird systematisch nach Checkliste gereinigt.</p>
             </div>
             <div class="step-card">
                 <div class="step-number">4</div>
-                <h3>Qualitätskontrolle mit Abnahmegarantie Endreinigung</h3>
-                <p>Bevor unser Team die Wohnung verlässt, überprüfen wir jeden Bereich sorgfältig. Sie erhalten ein Abnahmeprotokoll für Ihren Vermieter. Sollte bei der Wohnungsübergabe trotz unserer gründlichen Arbeit etwas beanstandet werden, kommen unsere Reinigungskräfte kostenlos zurück und beheben die Mängel umgehend.</p>
+                <h3>Qualitätskontrolle mit Abnahmegarantie</h3>
+                <p>Vor der Übergabe prüfen wir jeden Bereich sorgfältig. Sie erhalten ein Abnahmeprotokoll. Bei Beanstandungen kommen wir kostenlos zurück.</p>
             </div>
         </div>
-        <p class="section-text" style="margin-top: 24px;"><strong>Zeitaufwand für Ihre Umzugsreinigung:</strong> Eine 2-Zimmer Wohnung benötigt etwa 4-6 Stunden, eine 3-Zimmer Wohnung 6-8 Stunden, eine 4-Zimmer Wohnung 8-10 Stunden. Bei Häusern richtet sich der Zeitaufwand individuell nach der Grösse.</p>
+        <p class="section-text" style="margin-top: 24px;"><strong>Zeitaufwand:</strong> 2-Zimmer: 4-6h, 3-Zimmer: 6-8h, 4-Zimmer: 8-10h. Häuser individuell nach Grösse.</p>
     </div>
 </section>
 
+<!-- CTA Banner 3 -->
+<div class="cta-banner">
+    <div class="container">
+        <h3>Jetzt unverbindlich anfragen</h3>
+        <p>Faire Fixpreise - Keine versteckten Kosten - Abnahmegarantie inklusive</p>
+        <div class="cta-banner-btns">
+            <a href="tel:+41441223426" class="cta-btn-phone">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                +41 44 122 34 26
+            </a>
+            <a href="#offerte" class="cta-btn-form">Gratis-Offerte anfordern</a>
+        </div>
+    </div>
+</div>
+
 <!-- FAQ -->
-<section class="section section-alt">
+<section class="section section-alt" id="faq">
     <div class="container">
         <h2 class="section-title">Häufige Fragen über die Endreinigung mit Abnahmegarantie</h2>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Was ist der Unterschied zwischen einer Endreinigung und einer Umzugsreinigung?
-                <span class="icon">+</span>
-            </button>
+            <button class="faq-question" onclick="toggleFaq(this)">Was ist der Unterschied zwischen einer Endreinigung und einer Umzugsreinigung?<span class="icon">+</span></button>
             <div class="faq-answer"><div class="faq-answer-inner">Es gibt keinen Unterschied. Beide Begriffe bedeuten dasselbe: die gründliche Reinigung einer Wohnung nach dem Auszug. Teilweise wird auch der Begriff Wohnungsendreinigung verwendet.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Bin ich als Mieter zur Endreinigung verpflichtet?
-                <span class="icon">+</span>
-            </button>
+            <button class="faq-question" onclick="toggleFaq(this)">Bin ich als Mieter zur Endreinigung verpflichtet?<span class="icon">+</span></button>
             <div class="faq-answer"><div class="faq-answer-inner">Ja, ausser es wäre vertraglich anders vereinbart worden. In der Schweiz müssen Sie die Wohnung gründlich gereinigt und in ordnungsgemässem Zustand zurückgeben. Dies steht im Mietvertrag und ist gesetzlich vorgeschrieben.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Was sind die Folgen, wenn ich als Mieter auf die Endreinigung verzichte?
-                <span class="icon">+</span>
-            </button>
+            <button class="faq-question" onclick="toggleFaq(this)">Was sind die Folgen, wenn ich als Mieter auf die Endreinigung verzichte?<span class="icon">+</span></button>
             <div class="faq-answer"><div class="faq-answer-inner">Der Vermieter zieht die Reinigungskosten von Ihrer Mietkaution ab – meist CHF 500-1500 oder mehr. Folglich erhalten Sie Ihre Kaution nicht oder nur teilweise zurück.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Wie viel kostet eine Umzugsreinigung?
-                <span class="icon">+</span>
-            </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Die Kosten hängen von der Grösse der Wohnung oder des Hauses ab (vgl. obenstehende Preise).</div></div>
+            <button class="faq-question" onclick="toggleFaq(this)">Wie viel kostet eine Umzugsreinigung?<span class="icon">+</span></button>
+            <div class="faq-answer"><div class="faq-answer-inner">Die Kosten hängen von der Grösse der Wohnung oder des Hauses ab (vgl. <a href="#preise" style="color: var(--primary); text-decoration: underline;">obenstehende Preise</a>).</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Was ist im Preis alles inbegriffen?
-                <span class="icon">+</span>
-            </button>
+            <button class="faq-question" onclick="toggleFaq(this)">Was ist im Preis alles inbegriffen?<span class="icon">+</span></button>
             <div class="faq-answer"><div class="faq-answer-inner">Alle Reinigungsmittel, professionelle Ausrüstung, Anfahrt, MwSt. und unsere 100% Abnahmegarantie. Sie müssen nichts besorgen oder vorbereiten.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Was ist wenn die Wohnung sehr schmutzig ist?
-                <span class="icon">+</span>
-            </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Bei starker Verschmutzung (z.B. Schimmel, extremer Dreck etc.) erstellen wir einen individuellen Kostenvoranschlag. Teilen Sie uns den Zustand bei der Offerte mit, dann können wir den Aufwand korrekt kalkulieren.</div></div>
+            <button class="faq-question" onclick="toggleFaq(this)">Was ist wenn die Wohnung sehr schmutzig ist?<span class="icon">+</span></button>
+            <div class="faq-answer"><div class="faq-answer-inner">Bei starker Verschmutzung (z.B. Schimmel, extremer Dreck etc.) erstellen wir einen individuellen Kostenvoranschlag. Teilen Sie uns den Zustand bei der Offerte mit.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Was bedeutet Abnahmegarantie?
-                <span class="icon">+</span>
-            </button>
+            <button class="faq-question" onclick="toggleFaq(this)">Was bedeutet Abnahmegarantie?<span class="icon">+</span></button>
             <div class="faq-answer"><div class="faq-answer-inner">Wenn Ihr Vermieter bei der Wohnungsabnahme Mängel an der Reinigung findet, beheben wir diese kostenlos. So garantieren wir, dass die Wohnung abgenommen wird und Sie Ihre Kaution zurückerhalten.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Wie lange dauert eine Umzugsreinigung?
-                <span class="icon">+</span>
-            </button>
-            <div class="faq-answer"><div class="faq-answer-inner">
-                – 1-2 Zimmer: 4-6 Stunden<br>
-                – 3 Zimmer: 6-8 Stunden<br>
-                – 4 Zimmer: 8-10 Stunden<br>
-                – Häuser: je nach Grösse 10-16 Stunden<br>
-                – Die Dauer hängt vom Zustand und der Ausstattung ab.
-            </div></div>
+            <button class="faq-question" onclick="toggleFaq(this)">Wie lange dauert eine Umzugsreinigung?<span class="icon">+</span></button>
+            <div class="faq-answer"><div class="faq-answer-inner">1-2 Zimmer: 4-6 Stunden<br>3 Zimmer: 6-8 Stunden<br>4 Zimmer: 8-10 Stunden<br>Häuser: je nach Grösse 10-16 Stunden</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Was unterscheidet Endreinigungzuerich.ch von anderen Reinigungsfirmen in Zürich?
-                <span class="icon">+</span>
-            </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Faire Fixpreise ohne versteckte Kosten, 100% Abnahmegarantie (kostenlose Nachbesserung), spezialisiert auf Endreinigungen (keine allgemeine Haushaltsreinigung), langjährige Erfahrung mit Zürcher Vermietern und Verwaltungen, kurzfristig verfügbar, freundlich und professionell.</div></div>
+            <button class="faq-question" onclick="toggleFaq(this)">Was unterscheidet Endreinigungzuerich.ch von anderen Reinigungsfirmen?<span class="icon">+</span></button>
+            <div class="faq-answer"><div class="faq-answer-inner">Faire Fixpreise ohne versteckte Kosten, 100% Abnahmegarantie (kostenlose Nachbesserung), spezialisiert auf Endreinigungen, langjährige Erfahrung mit Zürcher Vermietern und Verwaltungen, kurzfristig verfügbar, freundlich und professionell.</div></div>
         </div>
 
         <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                Führt ihr Umzugsreinigungen auch ausserhalb des Kantons Zürich durch?
-                <span class="icon">+</span>
-            </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Wir arbeiten im ganzen Kanton Zürich. Für Anfragen ausserhalb des Kantons Zürich kontaktieren Sie uns bitte für eine individuelle Abklärung.</div></div>
+            <button class="faq-question" onclick="toggleFaq(this)">Führt ihr Umzugsreinigungen auch ausserhalb des Kantons Zürich durch?<span class="icon">+</span></button>
+            <div class="faq-answer"><div class="faq-answer-inner">Wir arbeiten im ganzen Kanton Zürich. Für Anfragen ausserhalb des Kantons kontaktieren Sie uns bitte für eine individuelle Abklärung.</div></div>
         </div>
     </div>
 </section>
@@ -946,36 +868,28 @@
         <div class="footer-grid">
             <div>
                 <img src="images/logo-white.png" alt="Endreinigung Zürich" class="footer-logo">
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook">f</a>
-                    <a href="#" aria-label="Instagram">in</a>
-                    <a href="#" aria-label="YouTube">yt</a>
-                    <a href="#" aria-label="TikTok">tk</a>
-                    <a href="#" aria-label="LinkedIn">li</a>
-                </div>
-            </div>
-            <div id="standorte">
-                <h4>Standorte</h4>
-                <a href="#">Zürich</a>
-                <a href="#">Meilen</a>
-                <a href="#">Horgen</a>
+                <p>Professionelle Endreinigung in Zürich mit 100% Abnahmegarantie.</p>
             </div>
             <div>
-                <h4>Wissenswertes</h4>
-                <a href="#">Was ist eine Endreinigung?</a>
-                <a href="#">Was sind die Anforderungen an eine Endreinigung?</a>
-                <a href="#">Kann ich die Endreinigung selber machen?</a>
+                <h4>Standorte</h4>
+                <a href="#top">Zürich</a>
+                <a href="#top">Meilen</a>
+                <a href="#top">Horgen</a>
+            </div>
+            <div>
+                <h4>Rechtliches</h4>
+                <a href="/impressum.html">Impressum</a>
+                <a href="/datenschutz.html">Datenschutzerklärung</a>
+                <a href="/agb.html">AGB</a>
             </div>
             <div>
                 <h4>Kontakt</h4>
-                <p>8001 Zürich<br>Schweiz</p>
-                <p style="margin-top: 8px;"><a href="tel:+41441223426">+41 44 122 34 26</a></p>
-                <p><a href="mailto:kontakt@endreinigungzuerich.ch">kontakt@endreinigungzuerich.ch</a></p>
-                <br>
-                <h4>Sonstiges</h4>
-                <a href="#">Impressum</a>
-                <a href="#" id="ueber-uns">Über uns</a>
-                <a href="#">Datenschutzerklärung</a>
+                <p>8001 Zürich, Schweiz</p>
+                <a href="tel:+41441223426" class="footer-phone">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    +41 44 122 34 26
+                </a>
+                <p style="margin-top: 8px;"><a href="mailto:kontakt@endreinigungzuerich.ch">kontakt@endreinigungzuerich.ch</a></p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -991,7 +905,10 @@
 
 <!-- Phone Sticky Bar Mobile -->
 <div class="phone-sticky">
-    <a href="tel:+41441223426">Tel: +41 44 122 34 26</a>
+    <a href="tel:+41441223426">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        Jetzt anrufen: +41 44 122 34 26
+    </a>
 </div>
 
 <script>
@@ -1001,18 +918,15 @@ function toggleMobileNav() {
 function closeMobileNav(e) {
     if (e.target === e.currentTarget) toggleMobileNav();
 }
-
 function showPricing(type, btn) {
     document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('pricing-wohnungen').classList.toggle('pricing-hidden', type !== 'wohnungen');
     document.getElementById('pricing-haeuser').classList.toggle('pricing-hidden', type !== 'haeuser');
 }
-
 function toggleFaq(btn) {
     const answer = btn.nextElementSibling;
     const isOpen = btn.classList.contains('active');
-    // Close all
     document.querySelectorAll('.faq-question').forEach(q => {
         q.classList.remove('active');
         q.nextElementSibling.style.maxHeight = null;
@@ -1022,7 +936,6 @@ function toggleFaq(btn) {
         answer.style.maxHeight = answer.scrollHeight + 'px';
     }
 }
-
 function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
